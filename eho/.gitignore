@@ -1,0 +1,11 @@
+echoServ
+
+*.exe
+*.out
+*.o
+*.obj
+*.a
+*.so
+*.dylib
+*.log
+*.tmp
