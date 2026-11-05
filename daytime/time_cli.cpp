@@ -9,27 +9,27 @@ int main(int argc, char* argv[]) {
     const char* server_ip = (argc > 1) ? argv[1] : "172.16.40.1";
     int port = (argc > 2) ? atoi(argv[2]) : 13;
 
-    // 1. создаётся UDP сокет
+    //создаётся UDP сокет
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
     if (sock < 0) {
         perror("socket");
         return 1;
     }
 
-    // 2. заполняется адресная структура сервера
+    // заполняется адресная структура сервера
     struct sockaddr_in server_addr;
     memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(port);
     
-    // IPстр переделывается в бинарный формат
+    //IPстр переделывается в бинарный формат
     if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0) {
         perror("inet_pton");
         close(sock);
         return 1;
     }
 
-    // 3. для UDP отправляется любой символ
+    //для UDP отправляется любой символ
     const char* msg = "ping";
     std::cout << "Sending request to " << server_ip << ":" << port << "..." << std::endl;
     
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // 4. принимается ответ
+    //принимается ответ
     char buf[256];
     socklen_t addr_len = sizeof(server_addr);
     ssize_t bytes_received = recvfrom(sock, buf, sizeof(buf) - 1, 0, 
